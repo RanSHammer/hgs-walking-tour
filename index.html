@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Walking Tour of Hampstead Garden Suburb</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brick: #8B4513;
+            --brick-light: #A0522D;
+            --cream: #FDF5E6;
+            --cream-dark: #F5E6D3;
+            --hedge: #4A6741;
+            --hedge-light: #5C8A52;
+            --hedge-dark: #2E4228;
+            --oak: #6B4226;
+            --slate: #4A4A4A;
+            --gold: #C5943A;
+            --gold-light: #D4A84B;
+            --parchment: #FAF0E4;
+            --shadow: rgba(107, 66, 38, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            background: var(--cream);
+            color: var(--slate);
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--hedge-dark) 0%, var(--hedge) 50%, var(--hedge-light) 100%);
+            color: var(--cream);
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero .subtitle {
+            font-style: italic;
+            font-size: 1.15rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero .ornament {
+            margin: 24px auto 0;
+            font-size: 1.5rem;
+            letter-spacing: 12px;
+            opacity: 0.5;
+        }
+
+        /* Nav */
+        .toc {
+            background: var(--cream-dark);
+            border-bottom: 2px solid var(--gold);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .toc-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .toc a {
+            color: var(--oak);
+            text-decoration: none;
+            font-size: 0.82rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .toc a:hover, .toc a.active {
+            background: var(--hedge);
+            color: var(--cream);
+        }
+
+        /* Main content */
+        .content {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .intro {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--oak);
+            margin-bottom: 48px;
+            padding: 32px;
+            background: var(--parchment);
+            border-left: 4px solid var(--gold);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 56px;
+            scroll-margin-top: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .section-number {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--hedge);
+            line-height: 1;
+            min-width: 48px;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.6rem;
+            color: var(--brick);
+            font-weight: 600;
+        }
+
+        .section h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.2rem;
+            color: var(--hedge-dark);
+            margin: 32px 0 12px;
+            font-weight: 600;
+        }
+
+        .section p {
+            margin-bottom: 16px;
+        }
+
+        .section strong {
+            color: var(--oak);
+        }
+
+        .section em {
+            color: var(--brick-light);
+        }
+
+        .section ul {
+            margin: 12px 0 16px 24px;
+        }
+
+        .section li {
+            margin-bottom: 6px;
+        }
+
+        /* Audio player */
+        .audio-player {
+            background: linear-gradient(135deg, var(--hedge-dark), var(--hedge));
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 6px var(--shadow);
+        }
+
+        .audio-player .play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .audio-player .play-btn:hover {
+            background: var(--gold-light);
+            transform: scale(1.05);
+        }
+
+        .audio-player .play-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+            margin-left: 2px;
+        }
+
+        .audio-player .play-btn.playing svg {
+            margin-left: 0;
+        }
+
+        .audio-player .audio-info {
+            color: var(--cream);
+            font-size: 0.85rem;
+            flex: 1;
+        }
+
+        .audio-player .audio-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .audio-player .audio-duration {
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }
+
+        .audio-player .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .audio-player .progress-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* Blockquote style for special facts */
+        .aside {
+            background: var(--parchment);
+            border-left: 4px solid var(--brick);
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+        }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            margin: 48px 0;
+            color: var(--gold);
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+        }
+
+        /* Epilogue */
+        .epilogue {
+            background: linear-gradient(135deg, var(--hedge-dark), var(--hedge));
+            color: var(--cream);
+            padding: 48px 32px;
+            border-radius: 12px;
+            margin-top: 48px;
+        }
+
+        .epilogue h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--gold);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        .epilogue p {
+            margin-bottom: 16px;
+            line-height: 1.9;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--brick-light);
+            font-style: italic;
+            font-size: 0.95rem;
+            border-top: 2px solid var(--gold);
+            margin-top: 60px;
+        }
+
+        .footer .walk-info {
+            margin-top: 16px;
+            font-style: normal;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero { padding: 48px 16px 36px; }
+            .content { padding: 24px 16px 60px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .section-number { font-size: 1.8rem; }
+            .intro { padding: 20px; font-size: 1.05rem; }
+            .toc a { font-size: 0.75rem; padding: 3px 7px; }
+        }
+
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
+
+        /* Print */
+        @media print {
+            .toc, .audio-player, .hero::before { display: none; }
+            .hero { background: white; color: black; padding: 20px; }
+            .content { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="hero-content">
+        <h1>A Walking Tour of<br>Hampstead Garden Suburb</h1>
+        <p class="subtitle">Starting in Temple Fortune, and walking as a local would</p>
+        <div class="ornament">❧ ❦ ❧</div>
+    </div>
+</header>
+
+<nav class="toc">
+    <div class="toc-inner">
+        <a href="#temple-fortune">Temple Fortune</a>
+        <a href="#henrietta">Henrietta Barnett</a>
+        <a href="#act">The 1906 Act</a>
+        <a href="#trust">The Trust</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#central-square">Central Square</a>
+        <a href="#woods">Big Wood & Little Wood</a>
+        <a href="#heath">Hampstead Heath</a>
+        <a href="#geology">Geology</a>
+        <a href="#golders-green">Golders Green</a>
+        <a href="#east-finchley">East Finchley</a>
+        <a href="#epilogue">Epilogue</a>
+    </div>
+</nav>
+
+<main class="content">
+
+    <div class="intro">
+        If you live in Temple Fortune and want to show visitors what makes this corner of north-west London special, the trick is not to present it as a pretty suburb with some nice trees. That misses the point. Hampstead Garden Suburb is really a social idea disguised as a neighbourhood: part utopian project, part architectural manifesto, part landscape experiment, and part stubborn local act of preservation that never quite stopped.
+    </div>
+
+    <!-- Section 1 -->
+    <section class="section" id="temple-fortune">
+        <div class="section-header">
+            <span class="section-number">1</span>
+            <h2>Temple Fortune: The Everyday Front Door</h2>
+        </div>
+
+        <p>Let's start with the name, because it already tells you that this place is older and stranger than it first appears.</p>
+
+        <p>"<strong>Temple</strong>" derives from the <strong>Knights Templar</strong>, the medieval Christian military order founded in 1119 to protect pilgrims travelling to the Holy Land. The Templars accumulated vast landholdings across Europe, and they held a sub-manor in this area of Hendon — records suggest their presence here as early as 1240. When the order was dissolved in 1312, their English lands were transferred to the Knights Hospitaller. But the name stuck — some local sources even attribute the landholding to the <strong>Knights of St John</strong> rather than the Templars, so the exact medieval provenance is a little hazy, which only makes it better as a story.</p>
+
+        <p>"<strong>Fortune</strong>" is more intriguing. It almost certainly doesn't mean fortune in the modern sense. The most likely derivation is from the Old English <em>foran tun</em> — "the settlement in front of the main one." Temple Fortune was the outlying hamlet, the small cluster of houses on the way to the main settlement of Hendon. It was, quite literally, the place you passed through.</p>
+
+        <p>There was once an old route here called <strong>Ducksetters Lane</strong>, recorded from around 1475, crossing this district before modern road names and shopping parades fixed the map. The name sounds half-comic now — it may relate to duck-shooting or a family name, nobody's quite sure — but it's the kind of survival that reminds you this was once rural Middlesex: fields, tracks, hedges, working land.</p>
+
+        <p>The London Clay under north London made <strong>brickmaking</strong> an important local trade. Before the avenues and detached houses, there were pits, kilns, carts. Here's one of those lovely ironies: the very industry that scarred the landscape before the Suburb was built provided the material from which its beautiful houses were constructed.</p>
+
+        <p>Then there is <strong>The Pantiles</strong>, Temple Fortune's distinctive shopping parade along Finchley Road. Designed by Arthur Joseph Penty, Unwin's assistant, as part of the original Suburb development, it has the same Arts and Crafts character as the residential streets — tile-hung facades, arched shopfronts, an intimate scale. The name deliberately echoes the famous Pantiles promenade in Tunbridge Wells. Even if you're just picking up bread, you're standing in the afterglow of an argument about how people should live.</p>
+
+        <p>Religious buildings in Temple Fortune include <strong>St Edward the Confessor</strong> (Catholic), <strong>St Mary & Archangel Michael Coptic Orthodox Church</strong>, and — most significantly for local identity — <strong>Alyth</strong>, the <strong>North Western Reform Synagogue</strong>, founded in 1933 on Alyth Gardens. The name comes from a Hebrew word meaning "ascent," and the congregation has been one of the leading Reform Jewish communities in the UK for nearly a century.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 2 -->
+    <section class="section" id="henrietta">
+        <div class="section-header">
+            <span class="section-number">2</span>
+            <h2>Henrietta Barnett's Radical Vision</h2>
+        </div>
+
+        <p>As we walk into the Suburb proper, the story belongs above all to <strong>Dame Henrietta Barnett</strong>.</p>
+
+        <p>She is one of those people London ought to celebrate more noisily than it does. Born Henrietta Rowland in 1851, she married Canon Samuel Barnett in 1873. Together they founded <strong>Toynbee Hall</strong> in Whitechapel in 1884 — the world's first university settlement house, where Oxford and Cambridge students lived among the East End poor. They also started the <strong>Whitechapel Art Gallery</strong>.</p>
+
+        <p>Through decades of work in London's most deprived areas, Henrietta had seen what overcrowded, airless, joyless housing did to people — not just to their bodies, but to their spirits. Her answer was radical for the time: not just better charity, but <strong>better place</strong>.</p>
+
+        <p>She imagined a settlement where people of different incomes could live in attractive surroundings, with dignity, greenery, and some sense of shared life. Not a workers' barracks. Not speculative developer rows. Not country villas for the rich only. Something mixed, thoughtful, beautiful, and morally serious.</p>
+
+        <h3>The Garden City Movement</h3>
+
+        <p>Henrietta was deeply influenced by <strong>Ebenezer Howard's Garden City movement</strong>, which argued that people didn't have to choose between the culture of the city and the beauty of the countryside.</p>
+
+        <p>Howard's first Garden City was already being built at <strong>Letchworth</strong> in Hertfordshire, designed by <strong>Raymond Unwin</strong> and <strong>Barry Parker</strong>. In <strong>1906</strong>, Henrietta established the <strong>Hampstead Garden Suburb Trust</strong>, purchased <strong>243 acres from Eton College</strong>, and appointed Unwin as architect.</p>
+
+        <p>On 2 May 1907, a large crowd gathered to watch Henrietta turn the first sod for the "Artisans' Quarter" — seventy acres of housing intended for working people. The idea was that a bricklayer's cottage should be as thoughtfully designed as a banker's villa.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 3 -->
+    <section class="section" id="act">
+        <div class="section-header">
+            <span class="section-number">3</span>
+            <h2>The 1906 Act of Parliament</h2>
+        </div>
+
+        <p>This is the sort of fact visitors never know, but locals secretly enjoy telling them.</p>
+
+        <p>The Suburb could not have been built under ordinary building rules. Victorian bye-laws demanded rigid grid-iron street layouts. So the Trust promoted a private bill: the <strong>Hampstead Garden Suburb Act 1906</strong>.</p>
+
+        <p>The Act allowed no more than <strong>eight houses per acre</strong> on average, and <strong>at least fifty feet between houses</strong> on opposite sides of a road. It permitted cul-de-sacs, irregular street layouts, and houses grouped around shared greens — all illegal under the standard bye-laws.</p>
+
+        <div class="aside">
+            That is an extraordinary thing to legislate for in suburban London: not simply buildings, but air, space, and visual relief. This little local Act helped point toward modern town planning in Britain.
+        </div>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 4 -->
+    <section class="section" id="trust">
+        <div class="section-header">
+            <span class="section-number">4</span>
+            <h2>Why the Suburb Still Looks Like the Suburb</h2>
+        </div>
+
+        <p>Many lovely places are gradually ruined by a thousand small changes: windows swapped, walls raised, front gardens paved, porches bolted on, hedges lost. Death by accumulation.</p>
+
+        <p>The <strong>Hampstead Garden Suburb Trust</strong> (reformed in 1968, strengthened in 1974 through a <strong>Scheme of Management</strong> approved by the High Court) still has legal powers to preserve the area's character. You cannot alter the external appearance of your house without Trust approval — windows, extensions, fences, even paint colours. Barnet Council adds <strong>Article 4 directions</strong>.</p>
+
+        <p><strong>Pevsner</strong> called it "the most perfect" English garden suburb.</p>
+
+        <div class="aside">
+            A favourite local anecdote: in 2015, the residents' association introduced a yellow and red card penalty system to discourage neighbours from using noisy lawnmowers and leafblowers. That's the kind of place this is.
+        </div>
+
+        <p>And the Trust maintains a rule Henrietta would have approved of: there is no gated community here. The streets are public. The greens are shared. The paths are open to everyone.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 5 -->
+    <section class="section" id="architecture">
+        <div class="section-header">
+            <span class="section-number">5</span>
+            <h2>The Architecture: Arts and Crafts, But Disciplined</h2>
+        </div>
+
+        <p>Much of the Suburb is shaped by the <strong>Arts and Crafts movement</strong> — a reaction against industrial mass production that celebrated handcraft, natural materials, and individuality within harmony.</p>
+
+        <p>Notice the roughcast walls, the mellow brick, the tile-hung upper storeys, deep eaves, chimney stacks, leaded lights, porches, gables, catslide roofs, and the way one house often bends or steps slightly in relation to another.</p>
+
+        <p><strong>Raymond Unwin</strong> designed curving roads inspired by medieval Bavarian towns, following contours and creating natural vistas. No two streets are the same — variety within unity, the feeling of an English village that had grown over centuries.</p>
+
+        <h3>The Architectural Zones</h3>
+        <ul>
+            <li>The <strong>Artisans' Quarter</strong> (near Hampstead Way) — smaller, simpler cottages, intended for working people</li>
+            <li>The <strong>Central Area</strong> — formal and grand, with Lutyens' monumental compositions</li>
+            <li>The <strong>outer roads</strong> near Wildwood Road — substantial Arts and Crafts villas</li>
+            <li><strong>Hampstead Way</strong> and <strong>Willifield Way</strong> — the earliest houses, many now listed</li>
+            <li>The <strong>1930s expansion</strong> north of the A1 — still attractive but less distinguished</li>
+        </ul>
+
+        <h3>Why Hedges, Not Walls</h3>
+        <p>One of the first things visitors notice: no front walls, no fences, no railings. Instead, hedgerows — privet, beech, holly, yew — trimmed to consistent height.</p>
+
+        <p>Henrietta Barnett insisted on this. Hedges soften boundaries; walls harden them. A hedge says the garden belongs to someone, but the street still belongs to everyone. The Trust still enforces this. In a city increasingly obsessed with security and enclosure, it still feels almost radical.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 6 -->
+    <section class="section" id="central-square">
+        <div class="section-header">
+            <span class="section-number">6</span>
+            <h2>Central Square: Edwin Lutyens</h2>
+        </div>
+
+        <p>If Unwin gave the Suburb its bones, <strong>Sir Edwin Lutyens</strong> gave it its soul. He would go on to design the <strong>Cenotaph</strong> on Whitehall, the <strong>Thiepval Memorial</strong> on the Somme, and vast swathes of New Delhi.</p>
+
+        <h3>St Jude on the Hill</h3>
+        <p>Consecrated on <strong>7 May 1911</strong>, the exterior is deceptively simple — a steep, barn-like roof with a soaring spire. But step inside, and the building transforms.</p>
+
+        <p><strong>Walter Percival Starmer</strong> (1877–1961) spent more than three decades painting murals that cover almost every surface — the <strong>largest cycle of painted murals in any English church</strong>. Warm golds, deep blues, russet reds depicting Biblical scenes.</p>
+
+        <div class="aside">
+            Look for the memorial to the children who died when the <strong>City of Benares</strong>, an evacuation ship, was torpedoed by a U-boat in 1940 en route to Canada. Seventy-seven of the ninety children aboard were killed. Several were from this parish.
+        </div>
+
+        <h3>The Free Church</h3>
+        <p>Facing St Jude's, the Free Church (also Lutyens, begun 1911) has a <strong>low concrete dome</strong> — Byzantine influences. Its foundation stone carried the sentiment: <strong>"God is larger than the Creeds."</strong></p>
+
+        <h3>The Quaker Meeting House</h3>
+        <p>Completed in 1913. Three traditions across one square — difference without discord. Even the skyline becomes an argument for coexistence.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 7 -->
+    <section class="section" id="woods">
+        <div class="section-header">
+            <span class="section-number">7</span>
+            <h2>Big Wood and Little Wood: The Ancient Heart</h2>
+        </div>
+
+        <p><strong>Big Wood</strong> (7.3 hectares) and <strong>Little Wood</strong> (1.2 hectares) are fragments of genuine ancient woodland — continuously forested for <strong>over 1,000 years</strong>, predating the Norman Conquest. They were probably part of land granted to Wealdheri, Bishop of London, around the year 704.</p>
+
+        <div class="aside">
+            Ancient woodland is irreplaceable. You can plant a forest in a generation. You cannot create ancient woodland in a millennium.
+        </div>
+
+        <h3>What Grows Here</h3>
+        <p>The canopy is <strong>English oak</strong> and <strong>hornbeam</strong>. Look for <strong>wild service trees</strong> (<em>Sorbus torminalis</em>) — one of the best indicators of genuine ancient woodland. Their fruits, called chequers, taste like dates when ripe — hence the number of English pubs called "The Chequers."</p>
+
+        <p>In spring, <strong>native English bluebells</strong> carpet the floor. Breeding birds include <strong>tawny owls, nuthatches, and treecreepers</strong>.</p>
+
+        <h3>The Elephant Story</h3>
+        <p>Before <strong>Denman Drive</strong> was laid out in 1912, the field between the woods was used for <strong>grazing elephants</strong> — likely connected to George Sanger's circus. You can truthfully tell your guests that elephants once stood in muddy fields under a north London sky, right where quiet suburban houses now stand.</p>
+
+        <h3>The Memorial Gate and the Theatre</h3>
+        <p>A memorial gate at the entrance to Big Wood commemorates <strong>29 residents killed in World War Two</strong>, standing on an ancient eighth-century boundary. In Little Wood, an <strong>open-air theatre</strong> built in 1920 still hosts summer performances. They didn't merely want people housed; they wanted them cultivated.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 8 -->
+    <section class="section" id="heath">
+        <div class="section-header">
+            <span class="section-number">8</span>
+            <h2>Hampstead Heath: London's Wild Heart</h2>
+        </div>
+
+        <p>Hampstead Heath — all <strong>790 acres</strong> — is one of London's greatest treasures. Home to more than 800 species of flowering plant and over 180 species of bird.</p>
+
+        <h3>The Heath Extension</h3>
+        <p>From 1903, Henrietta Barnett campaigned to save these fields from development. The Extension has evolved into wildflower meadows — quieter than the main Heath, one of the best places to walk without crowds.</p>
+
+        <h3>The Bathing Ponds</h3>
+        <p>Three famous ponds — <strong>Men's, Women's, and Mixed</strong> — fed by the headwaters of the <strong>Fleet</strong>, one of London's "lost rivers" flowing underground to the Thames at Blackfriars. Swimming is year-round, including hardy souls who break the ice in January.</p>
+
+        <h3>Parliament Hill</h3>
+        <p>At 321 feet, one of London's most famous views. The panorama is <strong>protected by law</strong> — the London View Management Framework ensures no skyscraper can block St Paul's dome from here.</p>
+
+        <h3>Kenwood House</h3>
+        <p>A neoclassical mansion remodelled by <strong>Robert Adam</strong> in the 1760s. The <strong>Iveagh Bequest</strong> includes Rembrandt's <em>Self-Portrait with Two Circles</em>, Vermeer's <em>The Guitar Player</em>, and works by Gainsborough and Turner. World-class paintings, completely free. The grounds, landscaped by Humphry Repton, host summer concerts.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 9 -->
+    <section class="section" id="geology">
+        <div class="section-header">
+            <span class="section-number">9</span>
+            <h2>The Geology Beneath Your Feet</h2>
+        </div>
+
+        <p>London sits in a <strong>syncline</strong> — a vast bowl filled with <strong>London Clay</strong>, laid down 50 million years ago when this was a warm, shallow sea. London Clay is why the Tube could be built, why parks are green, and why basements are damp.</p>
+
+        <p>But here, on the <strong>Northern Heights</strong>, a layer of <strong>Bagshot Sand</strong> caps the clay. Water percolates through the sand, hits the impermeable clay, and emerges as <strong>spring lines</strong> — feeding the bathing ponds and the headwaters of the Fleet.</p>
+
+        <div class="aside">
+            The Bagshot Sand resists erosion better than clay. Over millions of years, the clay wore away while the sand-capped hills remained. Without the Bagshot Sand, Hampstead Heath simply wouldn't exist.
+        </div>
+
+        <h3>How Geology Creates the Landscape</h3>
+        <ul>
+            <li><strong>Sandy hilltops</strong> (Bagshot Sand) — heath vegetation, acid grassland</li>
+            <li><strong>Clay slopes</strong> (London Clay) — dense woodland, bluebells in spring</li>
+            <li><strong>Spring lines</strong> (sand/clay boundary) — streams, ponds, the bathing ponds</li>
+            <li><strong>Ancient woodland</strong> — oak and hornbeam thriving on heavy clay</li>
+            <li>Even the Suburb's <strong>lush hedgerows</strong> owe their greenness to moisture-retaining clay</li>
+        </ul>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 10 -->
+    <section class="section" id="golders-green">
+        <div class="section-header">
+            <span class="section-number">10</span>
+            <h2>Golders Green</h2>
+        </div>
+
+        <p>Before <strong>22 June 1907</strong>, Golders Green was farmland. The Northern Line station transformed it overnight — one of the most dramatic examples of transport-led development in London's history.</p>
+
+        <p>There's a delicious irony. Henrietta Barnett created the Suburb to <em>prevent</em> speculative development. She succeeded — within the boundaries. Just outside, the free market did its thing.</p>
+
+        <h3>The Jewish Community</h3>
+        <p>Today, one of the most visibly Jewish neighbourhoods in the UK. Kosher restaurants, bakeries, bookshops. On Shabbat, the streets quieten and families walk to synagogue. This isn't a historical footnote — it's a living, thriving community unlike anywhere else in London.</p>
+
+        <h3>Golders Hill Park</h3>
+        <p>Formal gardens, a free zoo with lemurs and coatis, a walled garden, and butterfly house in summer.</p>
+
+        <h3>Golders Green Crematorium</h3>
+        <p>London's first, opened 1902. The remains of <strong>Sigmund Freud</strong> (ashes in an ancient Greek urn), <strong>Marc Bolan</strong> (memorial bench with white swan armrests), <strong>Keith Moon</strong>, <strong>T.S. Eliot</strong>, <strong>H.G. Wells</strong>, <strong>Peter Sellers</strong>, and many others.</p>
+    </section>
+
+    <div class="divider">❧</div>
+
+    <!-- Section 11 -->
+    <section class="section" id="east-finchley">
+        <div class="section-header">
+            <span class="section-number">11</span>
+            <h2>East Finchley</h2>
+        </div>
+
+        <h3>Charles Holden's Station</h3>
+        <p>One of London's finest Tube stations — Art Deco and Streamline Moderne. The famous <strong>kneeling archer</strong> on the roof, sculpted by <strong>Eric Aumonier</strong>, was unveiled on 22 July 1940 — during the Blitz — at a cost of <strong>£245</strong>. The only three-dimensional statue in the entire Underground system. Locals call him "Archie."</p>
+
+        <h3>The Phoenix Cinema</h3>
+        <p>One of the oldest continuously running cinemas in the UK. Opened <strong>11 May 1912</strong> as the East Finchley Picturedrome, its first screening was reportedly about the Titanic disaster, which had occurred weeks earlier. Now a community trust showing arthouse films.</p>
+
+        <h3>Cherry Tree Wood</h3>
+        <p>A small, ancient park — another patch in the green mosaic of North London's surviving woodland.</p>
+    </section>
+
+    <div class="divider">❧ ❦ ❧</div>
+
+    <!-- Epilogue -->
+    <section class="epilogue" id="epilogue">
+        <h2>Epilogue: Why It Matters</h2>
+
+        <p>Henrietta Barnett believed that beauty wasn't a luxury. She believed that every person, regardless of income, deserved to live in a well-designed home, on a tree-lined street, with access to green space and community life.</p>
+
+        <p>She wasn't entirely right — the social mixing experiment didn't fully succeed, and today it's one of the most expensive residential areas in London. The working families she built the Artisans' Quarter for could no more afford to live here now than they could afford Mayfair.</p>
+
+        <p>But the physical legacy endures. The streets are still beautiful. The hedgerows still bloom. The woods are still ancient. The churches still stand. The Trust still maintains its standards.</p>
+
+        <p>And on a spring morning, when the bluebells are out in Big Wood and you can see all the way to St Paul's from Parliament Hill, you understand what Henrietta Barnett was fighting for.</p>
+
+        <p><strong>She was fighting for this. And she won.</strong></p>
+    </section>
+
+    <footer class="footer">
+        <p>Walk slowly, look up at the rooflines, listen for woodpeckers in Big Wood,<br>and always stop for coffee at Temple Fortune.</p>
+        <div class="walk-info">
+            Walking time: 2–3 hours · Distance: ~5–6 km · Start: Temple Fortune parade
+        </div>
+    </footer>
+
+</main>
+
+<script>
+    // Sticky nav active state
+    const sections = document.querySelectorAll('.section, .epilogue');
+    const navLinks = document.querySelectorAll('.toc a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                const id = entry.target.id;
+                const activeLink = document.querySelector(`.toc a[href="#${id}"]`);
+                if (activeLink) activeLink.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-80px 0px -70% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>
