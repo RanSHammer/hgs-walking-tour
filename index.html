@@ -35,9 +35,12 @@
 
         /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--hedge-dark) 0%, var(--hedge) 50%, var(--hedge-light) 100%);
+            background: linear-gradient(to bottom, rgba(46, 66, 40, 0.7), rgba(46, 66, 40, 0.85)),
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Northway%2C_Hampstead_Garden_Suburb.jpg/1920px-Northway%2C_Hampstead_Garden_Suburb.jpg');
+            background-size: cover;
+            background-position: center 40%;
             color: var(--cream);
-            padding: 80px 20px 60px;
+            padding: 100px 20px 70px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -74,10 +77,19 @@
         }
 
         .hero .ornament {
-            margin: 24px auto 0;
+            margin: 24px auto 8px;
             font-size: 1.5rem;
             letter-spacing: 12px;
             opacity: 0.5;
+        }
+
+        .hero .author {
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 4px;
         }
 
         /* Nav */
@@ -354,6 +366,7 @@
         <h1>A Walking Tour of<br>Hampstead Garden Suburb</h1>
         <p class="subtitle">Starting in Temple Fortune, and walking as a local would</p>
         <div class="ornament">❧ ❦ ❧</div>
+        <p class="author">by Ran Hammer</p>
     </div>
 </header>
 
@@ -668,6 +681,9 @@
         <p>Walk slowly, look up at the rooflines, listen for woodpeckers in Big Wood,<br>and always stop for coffee at Temple Fortune.</p>
         <div class="walk-info">
             Walking time: 2–3 hours · Distance: ~5–6 km · Start: Temple Fortune parade
+        </div>
+        <div class="walk-info" style="margin-top: 8px;">
+            Header photo: Northway, Hampstead Garden Suburb · Wikimedia Commons (CC BY-SA)
         </div>
     </footer>
 
